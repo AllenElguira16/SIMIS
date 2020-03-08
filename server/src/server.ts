@@ -29,7 +29,8 @@ const mongoInstance = connectMongo(session);
     connectionOptions: {
       useNewUrlParser: true,
       useFindAndModify: false,
-      useCreateIndex: true
+      useCreateIndex: true,
+      useUnifiedTopology: true
     }
   }
 })
