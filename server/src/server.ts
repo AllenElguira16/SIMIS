@@ -24,8 +24,8 @@ const mongoInstance = connectMongo(session);
     "/": "${rootDir}/controllers/**/*.ts"
   },
   mongoose: {
-    url:
-      "mongodb+srv://user:user@clustersofstars-renyu.mongodb.net/SIMIS?retryWrites=true&w=majority",
+    url: "mongodb://localhost:27017/SIMIS",
+    //url: "mongodb+srv://user:user@clustersofstars-renyu.mongodb.net/SIMIS?retryWrites=true&w=majority",
     connectionOptions: {
       useNewUrlParser: true,
       useFindAndModify: false,

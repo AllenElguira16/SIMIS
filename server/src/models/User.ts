@@ -2,31 +2,23 @@ import { Model, ObjectID } from "@tsed/mongoose";
 import { Property, Default } from "@tsed/common";
 
 @Model()
-class User {
-  @ObjectID("id")
-  public _id!: string;
+class User implements ClientForm {
+  @ObjectID("id") public _id!: string;
 
-  @Property()
-  public firstname!: string;
-
-  @Property()
-  public lastname!: string;
-
-  @Property()
-  public address!: string;
-
-  @Property()
-  public mobile!: string;
-
-  @Property()
-  public category!: string;
-
-  @Property()
-  public remarks!: string;
-
-  @Property()
-  @Default(Date.now())
-  public dateCreated: Date = new Date();
+  @Property() public name!: string;
+  @Property() public address!: string;
+  @Property() public date!: number;
+  @Property() public policyID!: string;
+  @Property() public dynamicForm!: DynamicForm[];
+  @Property() public DS!: string;
+  @Property() public VAT!: string;
+  @Property() public LGT!: string;
+  @Property() public OTHERS!: string;
+  @Property() public MODEL!: string;
+  @Property() public PLATENO!: string;
+  @Property() public YEARMODEL!: string;
+  @Property() public MOTORNO!: string;
+  @Property() public CHASISNO!: string;
 }
 
 export default User;
