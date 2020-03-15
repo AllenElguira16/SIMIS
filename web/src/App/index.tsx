@@ -3,20 +3,22 @@ import { Container } from "reactstrap";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./Home";
-import AddItem from "./AddItem";
 import AppBar from "./AppBar";
 import Client from "./Client";
+import ClientList from "./ClientList";
 
+/**
+ * Main Routing
+ */
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <AppBar />
-
-      <Container>
+      <Container fluid className="pt-4">
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/client-lists" component={ClientList} />
           <Route exact path="/client/:id" component={Client} />
-          <Route path="/add-item" component={AddItem} />
         </Switch>
       </Container>
     </BrowserRouter>

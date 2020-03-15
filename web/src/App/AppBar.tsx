@@ -8,10 +8,13 @@ import {
   NavItem,
   NavLink
 } from "reactstrap";
+import { NavLink as BaseNavLink } from "react-router-dom";
 
+/**
+ * AppBar header
+ */
 const AppBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggle = () => setIsOpen(!isOpen);
 
   return (
@@ -22,10 +25,19 @@ const AppBar: React.FC = () => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/">Home</NavLink>
+              <NavLink tag={BaseNavLink} activeClassName="active" to="/" exact>
+                Home
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/add-item">Add Item</NavLink>
+              <NavLink
+                tag={BaseNavLink}
+                activeClassName="active"
+                to="/client-lists"
+                exact
+              >
+                Clients
+              </NavLink>
             </NavItem>
           </Nav>
         </Collapse>

@@ -4,7 +4,11 @@ import React from "react";
 // import MainForm from "./InsuranceForm";
 import Axios from "axios";
 import InsuranceForm from "../../Components/InsuranceForm";
+import { Card, CardBody, CardFooter, Button } from "reactstrap";
 
+/**
+ * Home Page
+ */
 const Home: React.FC = () => {
   const [clientForm, setClientForm] = React.useState<ClientForm>({
     name: "",
@@ -23,12 +27,20 @@ const Home: React.FC = () => {
     CHASISNO: ""
   });
 
+  /**
+   * Submit data to server to add new client
+   * @param event Accepts Event from FormElement
+   */
   const onSubmitAddClient = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { data } = await Axios.post("/users", clientForm);
     console.log(data);
   };
 
+  /**
+   *
+   * @param key Accepts keyof ClientForm
+   */
   const onInputChange = (key: keyof ClientForm) => (
     event: React.FormEvent<HTMLInputElement>
   ) => {
@@ -68,13 +80,22 @@ const Home: React.FC = () => {
   };
 
   return (
-    <InsuranceForm
-      addDynamicInput={addDynamicInput}
-      clientForm={clientForm}
-      onInputChange={onInputChange}
-      onSubmitClient={onSubmitAddClient}
-      dynamicInputOnChange={dynamicInputOnChange}
-    />
+    <Card tag="form" onSubmit={onSubmitAddClient}>
+      <CardBody>
+        <InsuranceForm
+          title="Add Client Form"
+          clientForm={clientForm}
+          onInputChange={onInputChange}
+          dynamicInputOnChange={dynamicInputOnChange}
+        />
+      </CardBody>
+      <CardFooter>
+        <Button onClick={addDynamicInput}>Add Input</Button>
+        <Button type="submit" color="primary" className="float-right">
+          Submit
+        </Button>
+      </CardFooter>
+    </Card>
   );
 };
 

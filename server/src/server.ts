@@ -10,6 +10,9 @@ import cors from "cors";
 import session from "express-session";
 import connectMongo from "connect-mongo";
 import mongoose from "mongoose";
+import compression from "compression";
+import methodOverride from "method-override";
+import cookieParser from "cookie-parser";
 const mongoInstance = connectMongo(session);
 
 @ServerSettings({
@@ -24,8 +27,9 @@ const mongoInstance = connectMongo(session);
     "/": "${rootDir}/controllers/**/*.ts"
   },
   mongoose: {
-    url: "mongodb://localhost:27017/SIMIS",
-    //url: "mongodb+srv://user:user@clustersofstars-renyu.mongodb.net/SIMIS?retryWrites=true&w=majority",
+    // url: "mongodb://localhost:27017/SIMIS",
+    url:
+      "mongodb+srv://user:user@clustersofstars-renyu.mongodb.net/SIMIS?retryWrites=true&w=majority",
     connectionOptions: {
       useNewUrlParser: true,
       useFindAndModify: false,
@@ -39,6 +43,9 @@ export class Server extends ServerLoader {
     this.set("trust proxy", 1);
     this.set("json spaces", 2);
     this.use(GlobalAcceptMimesMiddleware)
+      .use(cookieParser())
+      .use(compression())
+      .use(methodOverride())
       .use(express.urlencoded({ extended: true }))
       .use(express.json())
       .use(helmet())

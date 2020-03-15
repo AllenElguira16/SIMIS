@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import { Row, Col, FormGroup, Input, Button } from "reactstrap";
+import React from "react";
+import { Row, Col, FormGroup, Input } from "reactstrap";
 
 type Props = {
   props: InsuranceForm;
@@ -10,13 +10,66 @@ type Props = {
     s: string,
     i: number
   ): (event: React.FormEvent<HTMLInputElement>) => void;
+  readonly?: boolean;
 };
 
 const MainForm: React.FC<Props> = ({
   props,
   onInputChange,
-  dynamicInputOnChange
+  dynamicInputOnChange,
+  readonly
 }) => {
+  const vehicleForms = [
+    {
+      placeholder: "MODEL",
+      value: props.MODEL,
+      onChange: onInputChange("MODEL")
+    },
+    {
+      placeholder: "YEAR MODEL",
+      value: props.YEARMODEL,
+      onChange: onInputChange("YEARMODEL")
+    },
+    {
+      placeholder: "PLATE NO.",
+      value: props.PLATENO,
+      onChange: onInputChange("PLATENO")
+    },
+    {
+      placeholder: "MOTOR NO.",
+      value: props.MOTORNO,
+      onChange: onInputChange("MOTORNO")
+    },
+    {
+      placeholder: "CHASIS NO.",
+      value: props.DS,
+      onChange: onInputChange("MODEL")
+    }
+  ];
+
+  const miscForms = [
+    {
+      placeholder: "DS",
+      value: props.DS,
+      onChange: onInputChange("DS")
+    },
+    {
+      placeholder: "VAT",
+      value: props.VAT,
+      onChange: onInputChange("VAT")
+    },
+    {
+      placeholder: "LGT",
+      value: props.LGT,
+      onChange: onInputChange("LGT")
+    },
+    {
+      placeholder: "OTHERS",
+      value: props.OTHERS,
+      onChange: onInputChange("OTHERS")
+    }
+  ];
+
   return (
     <Row form>
       <Col>
@@ -25,6 +78,8 @@ const MainForm: React.FC<Props> = ({
             <Input
               value={form.input1}
               onChange={dynamicInputOnChange("input1", key)}
+              placeholder="Value"
+              disabled={readonly}
             />
           </FormGroup>
         ))}
@@ -35,6 +90,8 @@ const MainForm: React.FC<Props> = ({
             <Input
               value={form.key}
               onChange={dynamicInputOnChange("key", key)}
+              placeholder="Key"
+              disabled={readonly}
             />
           </FormGroup>
         ))}
@@ -45,76 +102,36 @@ const MainForm: React.FC<Props> = ({
             <Input
               value={form.input2}
               onChange={dynamicInputOnChange("input2", key)}
+              placeholder="Value"
+              disabled={readonly}
             />
           </FormGroup>
         ))}
       </Col>
       <Col>
-        <FormGroup>
-          <Input
-            placeholder="DS"
-            value={props.DS}
-            onChange={onInputChange("DS")}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Input
-            placeholder="VAT"
-            value={props.VAT}
-            onChange={onInputChange("VAT")}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Input
-            placeholder="LGT"
-            value={props.LGT}
-            onChange={onInputChange("LGT")}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Input
-            placeholder="OTHERS"
-            value={props.OTHERS}
-            onChange={onInputChange("OTHERS")}
-          />
-        </FormGroup>
+        {miscForms.map((formProps, key) => (
+          <FormGroup key={key}>
+            <Input
+              placeholder={formProps.placeholder}
+              value={formProps.value}
+              onChange={formProps.onChange}
+              type="number"
+              disabled={readonly}
+            />
+          </FormGroup>
+        ))}
       </Col>
       <Col>
-        <FormGroup>
-          <Input
-            placeholder="MODEL"
-            value={props.MODEL}
-            onChange={onInputChange("MODEL")}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Input
-            placeholder="YEAR MODEL"
-            value={props.YEARMODEL}
-            onChange={onInputChange("YEARMODEL")}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Input
-            placeholder="PLATE NO."
-            value={props.PLATENO}
-            onChange={onInputChange("PLATENO")}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Input
-            placeholder="MOTOR NO."
-            value={props.MOTORNO}
-            onChange={onInputChange("MOTORNO")}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Input
-            placeholder="CHASIS NO."
-            value={props.CHASISNO}
-            onChange={onInputChange("CHASISNO")}
-          />
-        </FormGroup>
+        {vehicleForms.map((formProps, key) => (
+          <FormGroup key={key}>
+            <Input
+              placeholder={formProps.placeholder}
+              value={formProps.value}
+              onChange={formProps.onChange}
+              disabled={readonly}
+            />
+          </FormGroup>
+        ))}
       </Col>
     </Row>
   );

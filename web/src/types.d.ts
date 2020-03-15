@@ -1,4 +1,6 @@
-type ClientForm = BasicForm & InsuranceForm;
+interface ClientForm extends BasicForm, InsuranceForm {
+  id?: string;
+}
 
 interface BasicForm {
   name: string;
