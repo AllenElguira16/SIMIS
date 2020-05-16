@@ -1,31 +1,30 @@
 import React from "react";
-// import { Button, Card, CardBody, CardFooter } from "reactstrap";
-// import ClientBasicForm from "./ClientBasicForm";
-// import MainForm from "./InsuranceForm";
 import Axios from "axios";
 import InsuranceForm from "../../Components/InsuranceForm";
 import { Card, CardBody, CardFooter, Button } from "reactstrap";
+
+const initialState = {
+  fullName: "",
+  address: "",
+  date: Date.now(),
+  policyID: "",
+  dynamicForm: [],
+  DS: "",
+  VAT: "",
+  LGT: "",
+  OTHERS: "",
+  MODEL: "",
+  YEARMODEL: "",
+  PLATENO: "",
+  MOTORNO: "",
+  CHASISNO: ""
+};
 
 /**
  * Home Page
  */
 const Home: React.FC = () => {
-  const [clientForm, setClientForm] = React.useState<ClientForm>({
-    name: "",
-    address: "",
-    date: Date.now(),
-    policyID: "",
-    dynamicForm: [],
-    DS: "",
-    VAT: "",
-    LGT: "",
-    OTHERS: "",
-    MODEL: "",
-    YEARMODEL: "",
-    PLATENO: "",
-    MOTORNO: "",
-    CHASISNO: ""
-  });
+  const [clientForm, setClientForm] = React.useState<ClientForm>(initialState);
 
   /**
    * Submit data to server to add new client
@@ -33,8 +32,12 @@ const Home: React.FC = () => {
    */
   const onSubmitAddClient = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const { data } = await Axios.post("/users", clientForm);
-    console.log(data);
+    const {data} = await Axios.post("/users", clientForm);
+    if (data.error) {
+      return alert(data.error);
+    }
+
+    alert(data.success);
   };
 
   /**

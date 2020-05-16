@@ -7,13 +7,11 @@ type Props = {
   onInputChange(
     key: keyof BasicForm
   ): (event: React.FormEvent<HTMLInputElement>) => void;
-  readonly?: boolean;
 };
 
 const ClientBasicForm: React.FC<Props> = ({
   props,
   onInputChange,
-  readonly
 }) => {
   return (
     <>
@@ -22,9 +20,8 @@ const ClientBasicForm: React.FC<Props> = ({
           <FormGroup>
             <Input
               placeholder="Name"
-              value={props.name}
-              onChange={onInputChange("name")}
-              disabled={readonly}
+              value={props.fullName}
+              onChange={onInputChange("fullName")}
             />
           </FormGroup>
           <FormGroup>
@@ -32,7 +29,6 @@ const ClientBasicForm: React.FC<Props> = ({
               placeholder="Address"
               value={props.address}
               onChange={onInputChange("address")}
-              disabled={readonly}
             />
           </FormGroup>
         </Col>
@@ -43,7 +39,6 @@ const ClientBasicForm: React.FC<Props> = ({
               placeholder="Date"
               value={moment(props.date).format("YYYY-MM-DD")}
               onChange={onInputChange("date")}
-              disabled={readonly}
             />
           </FormGroup>
         </Col>
@@ -55,7 +50,6 @@ const ClientBasicForm: React.FC<Props> = ({
               placeholder="Policy No."
               value={props.policyID}
               onChange={onInputChange("policyID")}
-              disabled={readonly}
             />
           </FormGroup>
         </Col>

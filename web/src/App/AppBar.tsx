@@ -20,8 +20,11 @@ const AppBar: React.FC = () => {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">Strongholds Insurance</NavbarBrand>
-        <NavbarToggler onClick={toggle} />
+        <NavbarBrand href="/">
+          <img src={require('../Assets/Default-Logo.png')} width={80} className="img-fluid" alt="Logo"/>
+          <span>Strongholds Insurance</span>
+        </NavbarBrand>
+        <NavbarToggler onClick={toggle}/>
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>

@@ -1,0 +1,10 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+#main-content {
+  background-image: url('Default-Logo.png');
+  background-position: center 60px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: contain;
+  height: 100vh;
+}

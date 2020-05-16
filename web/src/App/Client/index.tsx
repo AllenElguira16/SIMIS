@@ -1,8 +1,9 @@
 import React from "react";
-import Axios from "axios";
 import { RouteComponentProps } from "react-router-dom";
 import InsuranceForm from "../../Components/InsuranceForm";
 import { Card, CardBody, CardFooter, Button } from "reactstrap";
+import ClientStore from "../../Store/ClientStore";
+import {observer} from "mobx-react-lite";
 
 type URLParams = { id: string };
 
@@ -13,28 +14,26 @@ type URLParams = { id: string };
 const Client: React.FC<RouteComponentProps<URLParams>> = ({ match }) => {
   const [clientForm, setClientForm] = React.useState<ClientForm>();
   const [clientOriginal, setClientOriginal] = React.useState<ClientForm>();
-  const [isReadOnly, setReadOnly] = React.useState(true);
+  const {getClient, editClient} = React.useContext(ClientStore);
 
   /**
    * Gets users data before loading HTML
    */
   React.useEffect(() => {
-    async function getClient() {
-      const { data } = await Axios.get(`/users/${match.params.id}`);
+    (async () => {
+      const data = await getClient(match.params.id);
       setClientForm(data);
       setClientOriginal(data);
-    }
-    getClient();
-  }, [match.params.id]);
+    })();
+  }, [getClient, match.params.id]);
 
   /**
    * Submits data to server
    * @param event Event of Form upon submit
    */
-  const onSubmitAddClient = async (event: React.FormEvent<HTMLFormElement>) => {
+  const onEditClient = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // const { data } = await Axios.post("/users", clientForm);
-    // console.log(data);
+    await editClient(clientForm);
   };
 
   /**
@@ -93,61 +92,28 @@ const Client: React.FC<RouteComponentProps<URLParams>> = ({ match }) => {
 
   return (
     <>
-      <Card tag="form" onSubmit={onSubmitAddClient}>
+      <Card tag="form" onSubmit={onEditClient}>
         <CardBody>
           {clientForm && (
             <InsuranceForm
-              title={`Client ${clientForm.name}`}
+              title={`Client ${clientForm.fullName}`}
               clientForm={clientForm}
               onInputChange={onInputChange}
               dynamicInputOnChange={dynamicInputOnChange}
-              readonly={isReadOnly}
             />
           )}
         </CardBody>
         <CardFooter>
-          {!isReadOnly && (
-            <>
-              <Button onClick={addDynamicInput}>Add Input</Button>
-              <div className="float-right">
-                <Button type="submit" color="primary">
-                  Submit
-                </Button>
-                <Button
-                  type="submit"
-                  color="warning"
-                  onClick={() => {
-                    setReadOnly(!isReadOnly);
-                    setClientForm(clientOriginal);
-                  }}
-                >
-                  Cancel
-                </Button>
-              </div>
-            </>
-          )}
-          {isReadOnly && (
-            <div className="float-right">
-              <Button
-                type="submit"
-                color="primary"
-                onClick={() => setReadOnly(!isReadOnly)}
-              >
-                Edit
-              </Button>
-              <Button
-                type="submit"
-                color="danger"
-                // onClick={() => setReadOnly(!isReadOnly)}
-              >
-                Delete
-              </Button>
-            </div>
-          )}
+          <Button onClick={addDynamicInput}>Add Input</Button>
+          <div className="float-right">
+            <Button type="submit" color="primary">
+              Submit
+            </Button>
+          </div>
         </CardFooter>
       </Card>
     </>
   );
 };
 
-export default Client;
+export default observer(Client);

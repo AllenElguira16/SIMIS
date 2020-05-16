@@ -3,7 +3,7 @@ interface ClientForm extends BasicForm, InsuranceForm {
 }
 
 interface BasicForm {
-  name: string;
+  fullName: string;
   address: string;
   date: number;
   policyID: string;

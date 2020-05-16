@@ -11,6 +11,8 @@ import {
   Col
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import ClientStore from "../../Store/ClientStore";
+import {observer} from "mobx-react-lite";
 
 /**
  * Client List Page
@@ -18,17 +20,13 @@ import { Link } from "react-router-dom";
  * List of Clients in table
  */
 const ClientList: React.FC = () => {
-  const [clientForms, setClientForms] = React.useState<ClientForm[]>();
+  const {deleteClient, getClientList, searchClient, clientList} = React.useContext(ClientStore);
 
   React.useEffect(() => {
-    async function fetchClients() {
-      const { data } = await Axios.get("/users");
-      setClientForms(data);
-    }
-    fetchClients();
-  }, [setClientForms]);
+    (async () => await getClientList())();
+  }, [getClientList]);
 
-  if (!clientForms) return <>Loading...</>;
+  if (!clientList) return <>Loading...</>;
   return (
     <Card>
       <CardHeader>
@@ -37,7 +35,9 @@ const ClientList: React.FC = () => {
             <h5>Client Lists</h5>
           </Col>
           <Col>
-            <Input placeholder="Search - Policy ID" />
+            <Input placeholder="Search - Policy ID" onInput={async ({currentTarget}) => {
+              await searchClient(currentTarget.value);
+            }} />
           </Col>
         </Row>
       </CardHeader>
@@ -51,19 +51,29 @@ const ClientList: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {clientForms.length !== 0 ? (
-              clientForms.map((clientForm, key) => (
+            {clientList.length !== 0 ? (
+              clientList.map((client, key) => (
                 <tr key={key}>
-                  <td>{clientForm.policyID}</td>
-                  <td>{clientForm.name}</td>
+                  <td>{client?.policyID}</td>
+                  <td>{client?.fullName}</td>
                   <td>
-                    <Button
-                      tag={Link}
-                      to={`/client/${clientForm.id}`}
-                      color="primary"
-                    >
-                      View
-                    </Button>
+                      <Button
+                        type="button"
+                        color="primary"
+                        tag={Link}
+                        to={`/client/${client?.id}`}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        type="button"
+                        color="danger"
+                        onClick={async () => {
+                          await deleteClient(client?.id);
+                        }}
+                      >
+                        Delete
+                      </Button>
                   </td>
                 </tr>
               ))
@@ -79,4 +89,4 @@ const ClientList: React.FC = () => {
   );
 };
 
-export default ClientList;
+export default observer(ClientList);

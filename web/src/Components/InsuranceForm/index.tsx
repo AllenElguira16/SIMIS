@@ -13,7 +13,6 @@ interface Props {
     s: string,
     i: number
   ): (event: React.FormEvent<HTMLInputElement>) => void;
-  readonly?: boolean;
   title: string;
 }
 
@@ -26,14 +25,12 @@ const InsuranceForm: React.FC<Props> = props => {
       <ClientBasicForm
         props={clientForm}
         onInputChange={onInputChange}
-        readonly={props.readonly}
       />
       <hr />
       <MainForm
         props={clientForm}
         onInputChange={onInputChange}
         dynamicInputOnChange={dynamicInputOnChange}
-        readonly={props.readonly}
       />
     </>
   );
