@@ -1,18 +1,7 @@
-import {
-  BodyParams,
-  Controller,
-  Delete,
-  Get,
-  Inject,
-  PathParams,
-  Post,
-  Put,
-  QueryParams,
-  Required,
-  Status
-} from "@tsed/common";
+import {BodyParams, Controller, Delete, Get, Inject, PathParams, Post, Put, QueryParams, Required, Status} from "@tsed/common";
 import {MongooseModel} from "@tsed/mongoose";
 import {Users} from "../models/User";
+import {response} from "express";
 
 @Controller("/users")
 export class UsersController {
@@ -28,7 +17,7 @@ export class UsersController {
         },
       });
     }
-    return this.user.find();
+    return this.user.where("status", 1).find();
   }
 
   @Get("/:id")
@@ -64,7 +53,10 @@ export class UsersController {
   @Delete("/:id")
   async deleteClient(@PathParams() {id}: ClientForm) {
     try {
-      const response = await this.user.findByIdAndDelete(id);
+      const response = await this.user.findByIdAndUpdate(id, {
+        status: 0,
+      });
+      // const response = await this.user.findByIdAndDelete(id);
       if (!response) throw "Error Deleting User";
       return {success: "Successfully Deleted!"};
     } catch (error) {

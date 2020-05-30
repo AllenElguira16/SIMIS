@@ -1,10 +1,7 @@
 import React from "react";
-import { Container } from "reactstrap";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./Home";
-import AppBar from "./AppBar";
-import Client from "./Client";
-import ClientList from "./ClientList";
+import Admin from "./Admin";
 
 /**
  * Main Routing
@@ -12,14 +9,10 @@ import ClientList from "./ClientList";
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <AppBar />
-      <Container className="pt-4" tag="main" id="main-content">
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/client-lists" component={ClientList} />
-          <Route exact path="/client/:id" component={Client} />
-        </Switch>
-      </Container>
+      <Switch>
+        <Route path="/home" component={Home}/>
+        <Route path="/admin" component={Admin}/>
+      </Switch>
     </BrowserRouter>
   );
 };

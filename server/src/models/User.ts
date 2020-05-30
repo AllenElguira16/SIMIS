@@ -1,5 +1,5 @@
 import {Model, ObjectID} from "@tsed/mongoose";
-import {MinLength as Minimum, Property, Required} from "@tsed/common";
+import {Default, Property} from "@tsed/common";
 
 @Model()
 export class Users implements ClientForm {
@@ -47,4 +47,8 @@ export class Users implements ClientForm {
 
   @Property()
   public CHASISNO: string;
+
+  @Property()
+  @Default(1)
+  public status: number;
 }

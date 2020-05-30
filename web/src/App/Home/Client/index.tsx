@@ -1,8 +1,8 @@
 import React from "react";
 import { RouteComponentProps } from "react-router-dom";
-import InsuranceForm from "../../Components/InsuranceForm";
+import InsuranceForm from "../../../Components/InsuranceForm";
 import { Card, CardBody, CardFooter, Button } from "reactstrap";
-import ClientStore from "../../Store/ClientStore";
+import ClientStore from "../../../Store/ClientStore";
 import {observer} from "mobx-react-lite";
 
 type URLParams = { id: string };

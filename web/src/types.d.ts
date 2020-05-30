@@ -1,5 +1,6 @@
 interface ClientForm extends BasicForm, InsuranceForm {
   id?: string;
+  status?: number;
 }
 
 interface BasicForm {
@@ -26,4 +27,15 @@ interface InsuranceForm {
   PLATENO: string;
   MOTORNO: string;
   CHASISNO: string;
+}
+
+interface Employee {
+  id?: string;
+  username: string;
+  password: string;
+}
+
+interface ServerResponse {
+  error?: string;
+  success?: string;
 }

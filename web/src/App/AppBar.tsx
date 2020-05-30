@@ -20,7 +20,7 @@ const AppBar: React.FC = () => {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">
+        <NavbarBrand href="/home">
           <img src={require('../Assets/Default-Logo.png')} width={80} className="img-fluid" alt="Logo"/>
           <span>Strongholds Insurance</span>
         </NavbarBrand>
@@ -28,7 +28,7 @@ const AppBar: React.FC = () => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink tag={BaseNavLink} activeClassName="active" to="/" exact>
+              <NavLink tag={BaseNavLink} activeClassName="active" to="/home" exact>
                 Home
               </NavLink>
             </NavItem>
@@ -36,7 +36,7 @@ const AppBar: React.FC = () => {
               <NavLink
                 tag={BaseNavLink}
                 activeClassName="active"
-                to="/client-lists"
+                to="/home/client/lists"
                 exact
               >
                 Clients

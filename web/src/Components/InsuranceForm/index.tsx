@@ -1,7 +1,7 @@
 import React from "react";
 import ClientBasicForm from "./ClientBasicForm";
 import MainForm from "./MainForm";
-// import ClientBasicForm from "../App/Home/ClientBasicForm";
+// import ClientBasicForm from "../App/AddClient/ClientBasicForm";
 
 interface Props {
   clientForm: ClientForm;
