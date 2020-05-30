@@ -1,28 +1,43 @@
 import React from "react";
 // import Axios from "axios";
 import {action, observable} from "mobx";
+import Axios, {AxiosResponse} from "axios";
 
 class EmployeeStore {
   @observable
   public employees: Employee[] = [];
 
+  @observable
+  public isAuth = false;
+
   @action.bound
-  public getEmployees = () => {
+  public doLogin = async (input: Employee) => {
+    const {data} = await Axios.post('/employees/login', input);
+    this.isAuth = data;
   };
 
   @action.bound
-  public addEmployee = (formInput: Partial<Employee> | undefined): ServerResponse => {
-    return {};
+  public getEmployees = async () => {
+    const {data} = await Axios.get('/employees');
+    this.employees = data;
   };
 
   @action.bound
-  public editEmployee = (formInput: Partial<Employee> | undefined): ServerResponse => {
-    return {};
+  public addEmployee = async (formInput: Partial<Employee> | undefined): Promise<ServerResponse> => {
+    const {data}: AxiosResponse<ServerResponse> = await Axios.post('/employees', formInput);
+    return data;
   };
 
   @action.bound
-  public deleteEmployee = (id: Employee['id']): ServerResponse => {
-    return {};
+  public editEmployee = async (formInput: Partial<Employee> | undefined): Promise<ServerResponse> => {
+    const {data}: AxiosResponse<ServerResponse> = await Axios.put('/employees', formInput);
+    return data;
+  };
+
+  @action.bound
+  public deleteEmployee = async (id: Employee['id']): Promise<ServerResponse> => {
+    const {data}: AxiosResponse<ServerResponse> = await Axios.delete(`/employees/${id}`);
+    return data;
   };
 }
 

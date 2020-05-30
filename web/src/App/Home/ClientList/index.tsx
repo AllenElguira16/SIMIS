@@ -56,7 +56,10 @@ const ClientList: React.FC = () => {
                 <td>{client?.policyID}</td>
                 <td>{client?.fullName}</td>
                 <td>
-                  <Button type="button" color="primary" tag={Link} to={`/home/client/${client?.id}`}>
+                  <Button type="button" color="primary" tag={Link} to={`/home/client/view/${client?.id}`}>
+                    View
+                  </Button>
+                  <Button type="button" color="secondary" tag={Link} to={`/home/client/edit/${client?.id}`}>
                     Edit
                   </Button>
                   <Button type="button" color="danger" onClick={async () => await deleteClient(client?.id)}>

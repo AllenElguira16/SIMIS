@@ -29,3 +29,14 @@ interface InsuranceForm {
   MOTORNO: string;
   CHASISNO: string;
 }
+
+interface EmployeeForm {
+  id?: string;
+  username: string;
+  password: string;
+}
+
+interface ServerResponse {
+  error?: string;
+  success?: string;
+}

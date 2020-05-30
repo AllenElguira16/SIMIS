@@ -4,7 +4,7 @@ import {action, observable} from "mobx";
 
 class AdminStore {
   @observable
-  public isLoggedIn = !false;
+  public isLoggedIn = false;
   private password = '12345';
 
   @action.bound

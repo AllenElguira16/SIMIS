@@ -10,13 +10,10 @@ type Props = {
     s: string,
     i: number
   ): (event: React.FormEvent<HTMLInputElement>) => void;
+  readonly: boolean;
 };
 
-const MainForm: React.FC<Props> = ({
-  props,
-  onInputChange,
-  dynamicInputOnChange,
-}) => {
+const MainForm: React.FC<Props> = ({props, onInputChange, dynamicInputOnChange, readonly}) => {
   const vehicleForms = [
     {
       placeholder: "MODEL",
@@ -77,6 +74,7 @@ const MainForm: React.FC<Props> = ({
               value={form.input1}
               onChange={dynamicInputOnChange("input1", key)}
               placeholder="Value"
+              readOnly={readonly}
             />
           </FormGroup>
         ))}
@@ -88,6 +86,7 @@ const MainForm: React.FC<Props> = ({
               value={form.key}
               onChange={dynamicInputOnChange("key", key)}
               placeholder="Key"
+              readOnly={readonly}
             />
           </FormGroup>
         ))}
@@ -99,6 +98,7 @@ const MainForm: React.FC<Props> = ({
               value={form.input2}
               onChange={dynamicInputOnChange("input2", key)}
               placeholder="Value"
+              readOnly={readonly}
             />
           </FormGroup>
         ))}
@@ -111,6 +111,7 @@ const MainForm: React.FC<Props> = ({
               value={formProps.value}
               onChange={formProps.onChange}
               type="number"
+              readOnly={readonly}
             />
           </FormGroup>
         ))}
@@ -122,6 +123,7 @@ const MainForm: React.FC<Props> = ({
               placeholder={formProps.placeholder}
               value={formProps.value}
               onChange={formProps.onChange}
+              readOnly={readonly}
             />
           </FormGroup>
         ))}

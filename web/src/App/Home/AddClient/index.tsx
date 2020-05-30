@@ -90,6 +90,7 @@ const AddClient: React.FC = () => {
           clientForm={clientForm}
           onInputChange={onInputChange}
           dynamicInputOnChange={dynamicInputOnChange}
+          readonly={false}
         />
       </CardBody>
       <CardFooter>

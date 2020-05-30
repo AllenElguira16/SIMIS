@@ -13,7 +13,8 @@ type URLParams = { id: string };
  */
 const Client: React.FC<RouteComponentProps<URLParams>> = ({ match }) => {
   const [clientForm, setClientForm] = React.useState<ClientForm>();
-  const [clientOriginal, setClientOriginal] = React.useState<ClientForm>();
+  // const [clientOriginal, setClientOriginal] = React.useState<ClientForm>();
+  const [isReadOnly, setReadOnly] = React.useState<boolean>(false);
   const {getClient, editClient} = React.useContext(ClientStore);
 
   /**
@@ -23,7 +24,10 @@ const Client: React.FC<RouteComponentProps<URLParams>> = ({ match }) => {
     (async () => {
       const data = await getClient(match.params.id);
       setClientForm(data);
-      setClientOriginal(data);
+      // setClientOriginal(data);
+      if (/view/.test(window.location.pathname)) {
+        setReadOnly(true);
+      }
     })();
   }, [getClient, match.params.id]);
 
@@ -100,16 +104,25 @@ const Client: React.FC<RouteComponentProps<URLParams>> = ({ match }) => {
               clientForm={clientForm}
               onInputChange={onInputChange}
               dynamicInputOnChange={dynamicInputOnChange}
+              readonly={isReadOnly}
             />
           )}
         </CardBody>
         <CardFooter>
-          <Button onClick={addDynamicInput}>Add Input</Button>
-          <div className="float-right">
-            <Button type="submit" color="primary">
-              Submit
-            </Button>
-          </div>
+          {!isReadOnly ? (
+            <>
+              <Button onClick={addDynamicInput}>Add Input</Button>
+              <div className="float-right">
+                <Button type="submit" color="primary">
+                  Submit
+                </Button>
+              </div>
+            </>
+          ) : (
+            <div className="float-right">
+              <Button onClick={() => window.print()}>Print</Button>
+            </div>
+          )}
         </CardFooter>
       </Card>
     </>

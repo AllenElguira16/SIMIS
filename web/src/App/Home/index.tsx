@@ -5,8 +5,14 @@ import {Route, Switch} from "react-router-dom";
 import ClientList from "./ClientList";
 import Client from "./Client";
 import AddClient from "./AddClient";
+import EmployeeStore from "../../Store/EmployeeStore";
+import Login from "./Login";
+import {observer} from "mobx-react-lite";
 
 const Home = () => {
+  const {isAuth} = React.useContext(EmployeeStore);
+
+  if (!isAuth) return <Login />;
   return (
     <>
       <AppBar/>
@@ -15,11 +21,12 @@ const Home = () => {
           {/*AddClient Page*/}
           <Route exact path="/home" component={AddClient}/>
           <Route exact path="/home/client/lists" component={ClientList}/>
-          <Route exact path="/home/client/:id" component={Client}/>
+          <Route exact path="/home/client/view/:id" component={Client}/>
+          <Route exact path="/home/client/edit/:id" component={Client}/>
         </Switch>
       </Container>
     </>
   )
 };
 
-export default Home;
+export default observer(Home);
